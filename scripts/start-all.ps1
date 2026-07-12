@@ -2,15 +2,15 @@
 # Usage:  powershell -ExecutionPolicy Bypass -File scripts\start-all.ps1
 $root = Split-Path $PSScriptRoot -Parent
 
-#Backend REST API (FastAPI on :8000)
+# 1) Backend REST API (FastAPI on :8000)
 Start-Process powershell -ArgumentList "-NoExit", "-Command",
   "`$env:PYTHONPATH='$root\backend'; & '$root\backend\.venv\Scripts\python.exe' -m uvicorn app.main:app --reload --port 8000"
 
-#WebSocket Relay for live order book (:8080)
+# 2) WebSocket relay for live order book (:8080)
 Start-Process powershell -ArgumentList "-NoExit", "-Command",
   "`$env:PORT='8080'; node '$root\ws-server\server.js'"
 
-#Frontend (Vite on :5173)
+# 3) Frontend (Vite on :5173)
 Start-Process powershell -ArgumentList "-NoExit", "-Command",
   "npm --prefix '$root\frontend' run dev"
 

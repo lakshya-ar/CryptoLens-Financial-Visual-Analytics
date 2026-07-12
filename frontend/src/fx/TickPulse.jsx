@@ -5,8 +5,8 @@ const H = 18;
 
 /**
  * State-driven particle strip: every change in `mid` (live order-book mid
- * price) emits particles, green drifting up on an uptick and red drifting
- * down on a downtick. Cheap 2D canvas, no render loop when reduced motion is set.
+ * price) emits particles — green drifting up on an uptick, red drifting down
+ * on a downtick. Cheap 2D canvas, no render loop when reduced motion is set.
  */
 export function TickPulse({ mid }) {
   const canvasRef = useRef(null);

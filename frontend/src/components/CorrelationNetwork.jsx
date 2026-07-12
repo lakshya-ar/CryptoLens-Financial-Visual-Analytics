@@ -2,7 +2,7 @@ import { useApp } from "../state.jsx";
 import { COLORS, ASSET_COLOR } from "../theme";
 
 /**
- * View 5, network mode: the correlation matrix as a 2D node-link diagram.
+ * View 5, network mode — the correlation matrix as a 2D node-link diagram.
  * Nodes are assets (click one to make it the active asset); edge width and
  * opacity encode |ρ|, colour encodes sign (blue +, red −). Clicking an edge
  * drives the rolling-ρ drill-down below. Deliberately 2D: the data has no
@@ -53,7 +53,7 @@ export default function CorrelationNetwork({ matrix, labels }) {
               style={{ cursor: "pointer" }}
               onClick={() => setPair([a.sym, b.sym])}
             >
-              <title>{`${a.sym} · ${b.sym}  ρ = ${rho.toFixed(2)}, click to drill down`}</title>
+              <title>{`${a.sym} · ${b.sym}  ρ = ${rho.toFixed(2)} — click to drill down`}</title>
               <line
                 x1={a.x} y1={a.y} x2={b.x} y2={b.y}
                 stroke={rho >= 0 ? (selected ? "#0550ae" : COLORS.accent) : COLORS.bear}
@@ -70,7 +70,7 @@ export default function CorrelationNetwork({ matrix, labels }) {
           const labelAbove = Math.sin(angle) < 0;
           return (
             <g key={sym} style={{ cursor: "pointer" }} onClick={() => setAsset(sym)}>
-              <title>{`${sym}, click to make it the active asset`}</title>
+              <title>{`${sym} — click to make it the active asset`}</title>
               <circle
                 cx={x} cy={y} r={active ? 11 : 8}
                 fill={ASSET_COLOR[sym]}

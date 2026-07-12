@@ -14,7 +14,7 @@ const pct = (x) => (x == null ? "—" : `${(x * 100).toFixed(1)}%`);
 
 const SCEN_GLOW = { normal: "ok", stress: "warn", crash: "crit" };
 
-/** View 4: Volatility Engine, risk analytics with normal/stress/crash tail risk. */
+/** View 4 — Volatility Engine: risk analytics with normal/stress/crash tail risk. */
 export default function VolatilityEngine({ index = 0 }) {
   const { asset, window } = useApp();
   const [scenario, setScenario] = useState("normal");
@@ -69,7 +69,7 @@ export default function VolatilityEngine({ index = 0 }) {
   };
 
   // Return distribution: observed histogram vs the normal fit at the same
-  // mean/std. The visible gap in the tails is what kurtosis measures.
+  // mean/std — the visible gap in the tails is what kurtosis measures.
   const hist = data?.histogram;
   const centers = hist
     ? hist.bins.slice(0, -1).map((b, i) => ((b + hist.bins[i + 1]) / 2) * 100)
@@ -158,14 +158,14 @@ export default function VolatilityEngine({ index = 0 }) {
                 </div>
                 <Plot data={rollFig.data} layout={rollFig.layout} config={plotConfig} style={{ width: "100%" }} useResizeHandler />
                 <div style={{ color: COLORS.muted, fontSize: 11, margin: "6px 0 2px" }}>
-                  P(drop ≥ threshold): <b style={{ color: SCEN_COLOR[scenario] }}>{scenario}</b> scenario
+                  P(drop ≥ threshold) — <b style={{ color: SCEN_COLOR[scenario] }}>{scenario}</b> scenario
                 </div>
                 <Plot data={probFig.data} layout={probFig.layout} config={plotConfig} style={{ width: "100%" }} useResizeHandler />
               </>
             ) : (
               <>
                 <div style={{ color: COLORS.muted, fontSize: 11, margin: "2px 0 2px" }}>
-                  Return distribution: observed vs normal fit (fatter tails mean more extreme moves)
+                  Return distribution — observed vs normal fit (fatter tails ⇒ more extreme moves)
                 </div>
                 <Plot data={distFig.data} layout={distFig.layout} config={plotConfig} style={{ width: "100%" }} useResizeHandler />
               </>

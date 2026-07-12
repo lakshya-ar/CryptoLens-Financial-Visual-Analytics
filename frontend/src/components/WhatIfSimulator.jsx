@@ -9,7 +9,7 @@ import { COLORS, baseLayout, plotConfig } from "../theme";
 const pct = (x) => (x == null ? "—" : `${(x * 100).toFixed(2)}%`);
 
 /**
- * View 3: The What-If Simulator, a pattern hypothesis tester. Scans history
+ * View 3 — The What-If Simulator: pattern hypothesis tester. Scans history
  * (all of it, or just the brushed window) for a trigger and shows the
  * distribution of forward price paths after each occurrence. Trigger
  * timestamps are shared with the Time Machine, which marks them on the
@@ -162,14 +162,14 @@ export default function WhatIfSimulator({ index = 0 }) {
           <>
             <div style={{ color: COLORS.muted, fontSize: 11, marginBottom: 2 }}>
               Forward return distribution after a {submitted.thresholdPct}%{" "}
-              {submitted.direction} over {submitted.lookback} {submitted.resolution}, {data.n_events}{" "}
+              {submitted.direction} over {submitted.lookback} {submitted.resolution} — {data.n_events}{" "}
               historical occurrences (band = 10–90th &amp; 25–75th pctile)
             </div>
             <Plot data={fanFig.data} layout={fanFig.layout} config={plotConfig} style={{ width: "100%" }} useResizeHandler />
           </>
         ) : data ? (
           <div className="status">
-            No historical occurrences of this pattern in the available data. Try loosening the trigger.
+            No historical occurrences of this pattern in the available data — loosen the trigger.
           </div>
         ) : null}
       </Status>

@@ -16,7 +16,7 @@ DB_PATH = Path(os.environ["CRYPTOLENS_DB"]) if os.environ.get("CRYPTOLENS_DB") e
 CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "*")
 
 # Assets --------------------------------------------------------------------
-# maps each display symbol to its Binance USDT trading pair
+# display symbol -> Binance USDT trading pair
 ASSETS: dict[str, str] = {
     "BTC": "BTCUSDT",
     "ETH": "ETHUSDT",

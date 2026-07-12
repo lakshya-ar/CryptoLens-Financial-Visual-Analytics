@@ -7,7 +7,7 @@ import { useFetch } from "../hooks";
 import { COLORS, ASSET_COLOR, baseLayout, plotConfig } from "../theme";
 
 /**
- * View 1: The Time Machine, a multi-resolution temporal explorer.
+ * View 1 — The Time Machine: multi-resolution temporal explorer.
  * A compressed full-history overview with a range-slider brush drives the
  * shared window; the detail panel renders candlesticks + volume at the
  * auto-selected resolution, or at a manually forced one.
@@ -19,7 +19,7 @@ import { COLORS, ASSET_COLOR, baseLayout, plotConfig } from "../theme";
  * the pointer during drags.
  */
 // Quick-zoom presets. The backend maps each resulting span to a readable
-// candle resolution (5Y to monthly, 1Y to weekly, 1M to daily, 1W/1D to hourly).
+// candle resolution (5Y→monthly, 1Y→weekly, 1M→daily, 1W/1D→hourly).
 const PRESETS = [
   { label: "5Y", days: 5 * 365 },
   { label: "1Y", days: 365 },
@@ -45,7 +45,7 @@ const MIN_CANDLES = 6;
 const MAX_CANDLES = 2000;
 
 const pad2 = (n) => String(n).padStart(2, "0");
-// Format a Date from its local components, with no UTC conversion.
+// Format a Date from its local components — no UTC conversion.
 const fmtNaive = (d) =>
   `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}T` +
   `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
@@ -246,7 +246,7 @@ export default function TimeMachine({ index = 0 }) {
                   title={
                     en
                       ? `render ${o.label} candles`
-                      : "not readable at this window size; brush a different range"
+                      : "not readable at this window size — brush a different range"
                   }
                 >
                   {o.label}

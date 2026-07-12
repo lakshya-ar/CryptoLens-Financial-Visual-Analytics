@@ -61,7 +61,7 @@ MAX_CANDLES = 3000
 
 @lru_cache(maxsize=256)
 def _ohlcv_payload(symbol: str, start_iso: str, end_iso: str, res: str) -> dict:
-    """Cacheable OHLCV response. The DB is read-only, so a window's candles
+    """Cacheable OHLCV response — the DB is read-only, so a window's candles
     never change while the process lives (lru_cache does not cache raised
     exceptions, so DataUnavailable propagates until the DB appears)."""
     df = store.ohlcv(symbol, datetime.fromisoformat(start_iso), datetime.fromisoformat(end_iso), res)
@@ -205,7 +205,7 @@ def patterns(
 
     rng = store.full_range(symbol)
     if rng is None:
-        raise HTTPException(503, "no data for this symbol; run the ingestion first")
+        raise HTTPException(503, "no data for this symbol — run the ingestion first")
     lo, hi = rng
     start = start or lo
     end = end or hi
@@ -233,7 +233,7 @@ def depth(
         raise HTTPException(400, f"unknown symbol {symbol}")
     rng = store.full_range(symbol)
     if rng is None:
-        raise HTTPException(503, "no data for this symbol; run the ingestion first")
+        raise HTTPException(503, "no data for this symbol — run the ingestion first")
     lo, hi = rng
     at = at or hi
     at = min(max(at, lo), hi)

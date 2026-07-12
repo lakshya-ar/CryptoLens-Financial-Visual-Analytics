@@ -1,14 +1,14 @@
 # CryptoLens
 
-An interactive visual analytics system for crypto market intelligence, built for CS661 Group-13.
+An interactive visual analytics system for crypto market intelligence — CS661 Group-13.
 
 Five coordinated, brushable views over 5 years of minute-level data for BTC, ETH, BNB, SOL, XRP:
 
-1. **The Time Machine**: multi-resolution temporal explorer (brush & link).
-2. **Market Depth Visualiser**: order-book depth (live via WebSocket + historical reconstruction).
-3. **The What-If Simulator**: pattern hypothesis tester over all history.
-4. **Volatility Engine**: market-risk analytics with normal / stress / crash scenarios.
-5. **Cross-Asset Correlation Matrix**: pairwise correlation heatmap with drill-down.
+1. **The Time Machine** — multi-resolution temporal explorer (brush & link).
+2. **Market Depth Visualiser** — order-book depth (live via WebSocket + historical reconstruction).
+3. **The What-If Simulator** — pattern hypothesis tester over all history.
+4. **Volatility Engine** — market-risk analytics with normal / stress / crash scenarios.
+5. **Cross-Asset Correlation Matrix** — pairwise correlation heatmap with drill-down.
 
 ## Architecture
 

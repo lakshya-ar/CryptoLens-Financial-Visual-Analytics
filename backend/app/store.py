@@ -27,7 +27,7 @@ def get_con() -> duckdb.DuckDBPyConnection:
     if _con is None:
         if not DB_PATH.exists():
             raise DataUnavailable(
-                f"{DB_PATH} not found; run `python -m ingestion.download` first."
+                f"{DB_PATH} not found — run `python -m ingestion.download` first."
             )
         _con = duckdb.connect(str(DB_PATH), read_only=True)
     return _con
@@ -55,14 +55,14 @@ def pick_resolution(start: datetime, end: datetime, coarse_ok: bool = False) -> 
     """Auto-select candle resolution from the selected window length.
 
     coarse_ok=True (the price chart) unlocks weekly/monthly buckets so any span
-    renders as a readable ~30-90 candles (semantic zoom):
-        > ~1.1y      : monthly (5y  ≈ 60 candles)
-        ~2.5mo-1.1y  : weekly  (1y  ≈ 52 candles)
-        ~8-75d       : daily   (1mo ≈ 30 candles)
-        ~1-8d        : hourly  (1d  ≈ 24 candles)
-        < 1d         : minute
+    renders as a readable ~30-90 candles — semantic zoom:
+        > ~1.1y  -> monthly   (5y  ≈ 60 candles)
+        ~2.5mo-1.1y -> weekly (1y  ≈ 52 candles)
+        ~8-75d   -> daily     (1mo ≈ 30 candles)
+        ~1-8d    -> hourly     (1d  ≈ 24 candles)
+        < 1d     -> minute
     coarse_ok=False (volatility/correlation) keeps the original tiers capped at
-    daily, since monthly returns give too few points for meaningful risk/corr math.
+    daily — monthly returns give too few points for meaningful risk/corr math.
     """
     span_days = (end - start).total_seconds() / 86400
     if coarse_ok:
@@ -96,7 +96,7 @@ def ohlcv(symbol: str, start: datetime, end: datetime, resolution: str) -> pd.Da
         )
         return _query(sql, [symbol, start, end])
 
-    interval = RESOLUTIONS[resolution]  # whitelisted, so it's safe to inline
+    interval = RESOLUTIONS[resolution]  # whitelisted -> safe to inline
     sql = f"""
         SELECT time_bucket(INTERVAL '{interval}', ts) AS ts,
                arg_min(open, ts)  AS open,

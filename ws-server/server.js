@@ -3,6 +3,8 @@
  *
  * Frontend clients connect to ws://localhost:8080 and send:
  *     { "type": "subscribe", "symbol": "BTC" }
+ * The server maintains one upstream Binance depth stream per symbol and
+ * fans out normalised cumulative-depth snapshots to subscribed clients.
  *
  * Binance public stream (no auth):
  *     wss://stream.binance.com:9443/ws/<pair>@depth20@100ms
@@ -20,9 +22,11 @@ app.get("/health", (_req, res) => res.json({ status: "ok", symbols: Object.keys(
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
+// symbol -> { upstream, clients:Set, last }
 const feeds = new Map();
 
 function cumulate(levels) {
+  // levels: [[priceStr, sizeStr], ...]
   let cum = 0;
   return levels.map(([p, s]) => {
     const price = parseFloat(p);
@@ -33,8 +37,8 @@ function cumulate(levels) {
 }
 
 function normalise(symbol, raw) {
-  const bids = cumulate(raw.bids || []);
-  const asks = cumulate(raw.asks || []);
+  const bids = cumulate(raw.bids || []); // descending prices
+  const asks = cumulate(raw.asks || []); // ascending prices
   const mid =
     bids.length && asks.length ? (bids[0].price + asks[0].price) / 2 : null;
   return { type: "depth", symbol, mid, bids, asks, synthetic: false, ts: Date.now() };
@@ -58,7 +62,7 @@ function ensureUpstream(symbol) {
   const connect = () => {
     const up = new WebSocket(url);
     feed.upstream = up;
-    up.on("open", () => { backoff = 1000; });
+    up.on("open", () => { backoff = 1000; }); // reset backoff on a good connect
     up.on("message", (buf) => {
       let raw;
       try { raw = JSON.parse(buf.toString()); } catch { return; }
@@ -67,15 +71,19 @@ function ensureUpstream(symbol) {
       fanout(msg);
     });
     up.on("close", () => {
+      // Reconnect (with backoff) only while clients are still listening.
       if (feed.clients.size > 0) {
+        // Tell clients the feed dropped so the UI can show a clear state
+        // instead of a spinner that never resolves (e.g. a US-region deploy
+        // that Binance rejects with HTTP 451).
         fanout({ type: "status", ok: false, symbol, reason: "upstream_down" });
         setTimeout(connect, backoff);
-        backoff = Math.min(backoff * 2, 30000); 
+        backoff = Math.min(backoff * 2, 30000); // 1,2,4,…,30s cap
       }
     });
     up.on("error", (err) => {
       console.error(`upstream ${symbol} error:`, err.message);
-      up.close();
+      up.close(); // triggers the close handler above (status + backoff retry)
     });
   };
   connect();
@@ -99,7 +107,7 @@ wss.on("connection", (client) => {
       unsubscribeAll(client);
       const feed = ensureUpstream(msg.symbol);
       feed.clients.add(client);
-      if (feed.last) client.send(JSON.stringify(feed.last));
+      if (feed.last) client.send(JSON.stringify(feed.last)); // instant first paint
     } else if (msg.type === "unsubscribe") {
       unsubscribeAll(client);
     }

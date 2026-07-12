@@ -24,7 +24,7 @@ body {
   font-size: 13px;
 }
 
-/* Header */
+/* Header --------------------------------------------------------------- */
 .app-header {
   display: flex;
   align-items: center;
@@ -66,7 +66,7 @@ body {
 }
 .window-readout b { color: var(--text); font-weight: 600; }
 
-/* Dashboard grid: 5 views on one screen.
+/* Dashboard grid: 5 views on one screen --------------------------------
    Row 1: Time Machine (2/3) + Volatility Engine (1/3)
    Row 2: Correlation Matrix + Market Depth + What-If Simulator (1/3 each) */
 .dashboard {
@@ -87,7 +87,7 @@ body {
   .span-2, .span-3 { grid-column: span 6; }
 }
 
-/* Panels */
+/* Panels --------------------------------------------------------------- */
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -139,7 +139,7 @@ body {
   flex-direction: column;
 }
 
-/* Status / stats */
+/* Status / stats ------------------------------------------------------- */
 .status { color: var(--muted); padding: 24px; text-align: center; font-size: 12px; }
 .status.err { color: var(--bear); }
 
@@ -151,7 +151,7 @@ body {
 /* Pin stat rows to the panel bottom so neighbouring panels align. */
 .stats-row { display: flex; gap: 18px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
 
-/* Controls */
+/* Controls ------------------------------------------------------------- */
 .controls { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: flex-end; margin-bottom: 6px; }
 .field { display: flex; flex-direction: column; gap: 3px; }
 .field label { color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.4px; }
@@ -199,11 +199,11 @@ body {
 
 .plot-wrap { width: 100%; }
 
-/* Micro-interactions */
+/* Micro-interactions ----------------------------------------------------- */
 .btn, .asset-tab, .seg button { transition: transform 0.1s ease, filter 0.15s ease, background 0.15s ease, color 0.15s ease; }
 .btn:active, .asset-tab:active:not(:disabled), .seg button:active { transform: scale(0.96); }
 
-/* Accessibility: honour reduced-motion preferences */
+/* Accessibility: honour reduced-motion preferences ------------------------ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

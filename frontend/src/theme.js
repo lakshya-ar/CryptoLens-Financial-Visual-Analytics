@@ -1,5 +1,5 @@
 // Light theme. Candle up/down keep the industry-standard green/red
-// (the TradingView palette, legible on white); all text/UI colours are chosen
+// (TradingView palette — legible on white); all text/UI colours are chosen
 // for WCAG-AA contrast on a white panel.
 export const COLORS = {
   bg: "#f4f6fa",

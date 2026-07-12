@@ -7,7 +7,7 @@ import { useFetch } from "../hooks";
 import { COLORS, baseLayout, plotConfig } from "../theme";
 
 /**
- * View 5: Cross-Asset Correlation Matrix. Always shows all five assets
+ * View 5 — Cross-Asset Correlation Matrix. Always shows all five assets
  * regardless of the selected one. Clicking a cell (matrix) or an edge
  * (network) drills into the rolling correlation for that pair.
  */
@@ -45,8 +45,8 @@ export default function CorrelationMatrix({ index = 0 }) {
         y: labels[i],
         text: v == null ? "—" : v.toFixed(2),
         showarrow: false,
-        // Strong |ρ| sits on the dark ends of the diverging scale, so it gets
-        // white text; weak |ρ| sits near the light middle, so it gets dark text.
+        // Strong |ρ| sits on the dark ends of the diverging scale → white text;
+        // weak |ρ| sits near the light middle → dark text.
         font: { size: 11, color: v != null && Math.abs(v) > 0.55 ? "#ffffff" : COLORS.text },
       });
     })

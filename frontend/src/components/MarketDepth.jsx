@@ -8,7 +8,7 @@ import { useFetch } from "../hooks";
 import { COLORS, baseLayout, plotConfig } from "../theme";
 
 /**
- * View 2: Market Depth Visualiser. Mirrored cumulative depth: buyer volume
+ * View 2 — Market Depth Visualiser. Mirrored cumulative depth: buyer volume
  * (support) on the bid side, seller volume (resistance) on the ask side.
  * Live mode streams from the Binance relay; historical mode reconstructs depth
  * from OHLCV at the window end.
@@ -18,8 +18,8 @@ export default function MarketDepth({ index = 0 }) {
   const [mode, setMode] = useState("historical");
   const [live, setLive] = useState(null);
   const [wsState, setWsState] = useState("idle");
-  // How many connect attempts since the last successful open, used to drive
-  // the "waking the relay" hint (Render's free tier cold-starts in ~30-60s).
+  // How many connect attempts since the last successful open — drives the
+  // "waking the relay" hint (Render's free tier cold-starts in ~30–60s).
   const [attempts, setAttempts] = useState(0);
   const wsRef = useRef(null);
 
@@ -31,8 +31,8 @@ export default function MarketDepth({ index = 0 }) {
 
   // Live mode with auto-reconnect + exponential backoff. Without this a single
   // failed connect (relay asleep on the free tier, a dropped socket, a Wi-Fi
-  // blip) left the panel stuck forever, even though the relay itself is fine
-  // and the client just never tried again.
+  // blip) left the panel stuck forever — the relay itself is fine, the client
+  // just never tried again.
   useEffect(() => {
     if (mode !== "live") return;
 
@@ -141,7 +141,7 @@ export default function MarketDepth({ index = 0 }) {
         <TickPulse mid={live?.mid} /> <span className="live-dot" /> {wsState}
       </span>
     ) : book?.synthetic ? (
-      <span style={{ fontSize: 11, color: COLORS.warn }}>synthetic (reconstructed), not real quotes</span>
+      <span style={{ fontSize: 11, color: COLORS.warn }}>synthetic (reconstructed) — not real quotes</span>
     ) : null;
 
   return (
@@ -171,7 +171,7 @@ export default function MarketDepth({ index = 0 }) {
         {mode === "live" && !live ? (
           <div className="status">
             {wsState === "unavailable"
-              ? "Live feed unavailable. The relay can't reach Binance right now."
+              ? "Live feed unavailable — the relay can't reach Binance right now."
               : attempts >= 2
               ? "Waking the live relay (free tier cold-starts in ~30–60s)…"
               : "Connecting to live stream…"}
